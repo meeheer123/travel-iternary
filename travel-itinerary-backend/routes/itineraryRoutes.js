@@ -19,25 +19,10 @@ router.post('/generate-itinerary', async (req, res) => {
       activities: generatedItinerary.activities
     });
 
-    await newItinerary.save();
-
     res.status(201).json(newItinerary);
   } catch (error) {
     console.error('Error generating itinerary:', error);
     res.status(500).json({ message: 'Error generating itinerary', error: error.message });
-  }
-});
-
-router.get('/itinerary/:id', async (req, res) => {
-  try {
-    const itinerary = await Itinerary.findById(req.params.id);
-    if (!itinerary) {
-      return res.status(404).json({ message: 'Itinerary not found' });
-    }
-    res.json(itinerary);
-  } catch (error) {
-    console.error('Error fetching itinerary:', error);
-    res.status(500).json({ message: 'Error fetching itinerary' });
   }
 });
 

@@ -121,6 +121,7 @@ const TravelItineraryGenerator = () => {
                   id="budget"
                   className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 pr-12 sm:text-sm border-gray-300 rounded-md"
                   placeholder="0.00"
+                  required
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
                 />
@@ -145,6 +146,7 @@ const TravelItineraryGenerator = () => {
                   value={travelers}
                   onChange={(e) => setTravelers(e.target.value)}
                   min="1"
+                  required
                 />
               </div>
             </div>
@@ -164,6 +166,7 @@ const TravelItineraryGenerator = () => {
                   placeholder="Enter destination"
                   value={destination}
                   onChange={(e) => setDestination(e.target.value)}
+                  required
                 />
               </div>
             </div>

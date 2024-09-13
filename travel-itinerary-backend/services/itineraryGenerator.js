@@ -1,7 +1,7 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+require('dotenv').config();
 
-// Access your API key as an environment variable (see "Set up your API key" above)
-const genAI = new GoogleGenerativeAI({ apiKey: process.env.GENERATIVE_AI_API_KEY });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const generateItinerary = async (destination, startDate, endDate, budget, travelers, interests) => {
   const duration = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)) + 1;
@@ -36,7 +36,7 @@ const generateItinerary = async (destination, startDate, endDate, budget, travel
     ]
   }
   
-  Ensure the itinerary is highly relevant to the traveler's interests, destination, and budget. The activities should be engaging, diverse, and exciting. Each description should highlight the cultural, historical, or recreational significance of the activity. Keep the tone informative and enthusiastic.`;
+  Ensure the itinerary is highly relevant to the traveler's interests, destination, and budget. The activities should be engaging, diverse, and exciting. Each description should highlight the cultural, historical, or recreational significance of the activity. Keep the tone informative and enthusiastic. Do not give anything other than a JSON`;
   
 
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -47,9 +47,25 @@ const generateItinerary = async (destination, startDate, endDate, budget, travel
     console.log('Raw response:', responseText); // Log raw response
 
     // Check if the response contains any extraneous characters
-    const jsonString = responseText.replace(/^```json|```$/g, ''); // Remove possible markdown
-    const itinerary = JSON.parse(jsonString);
-
+    const jsonString = responseText.replace(/^```json|```$/g, '').trim();
+    let itinerary;
+    try {
+      itinerary = JSON.parse(jsonString);
+    } catch (parseError) {
+      console.error('Error parsing JSON:', parseError);
+      // Attempt to fix common JSON issues
+      const fixedJsonString = jsonString
+        .replace(/,\s*}/g, '}')  // Remove trailing commas
+        .replace(/,\s*\]/g, ']')  // Remove trailing commas in arrays
+        .replace(/\\/g, '\\\\');  // Escape backslashes
+      try {
+        itinerary = JSON.parse(fixedJsonString);
+      } catch (secondParseError) {
+        console.error('Error parsing fixed JSON:', secondParseError);
+        throw new Error('Unable to parse itinerary data');
+      }
+    }
+    
     itinerary.activities = itinerary.activities.map(activity => ({
       ...activity,
       image: `https://source.unsplash.com/800x600/?${encodeURIComponent(destination + ' ' + activity.activity)}`
