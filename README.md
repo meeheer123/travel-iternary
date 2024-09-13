@@ -44,6 +44,9 @@ The Personalized Travel Itinerary Generator is a web application that creates cu
     npm install
     ```
 
+3. Setup .env:
+- Setup .env file in the root folder
+
 3. Start the development server:
    ```
    npm run dev
