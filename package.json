@@ -10,6 +10,7 @@
     "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },  
   "devDependencies": {
-    "concurrently": "^6.2.0"
+    "concurrently": "^6.2.0",
+    "react-scripts": "5.0.1"
   }
 }
