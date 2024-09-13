@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaCalendarAlt, FaMoneyBillWave, FaUserFriends, FaMapMarkerAlt, FaImage } from 'react-icons/fa';
+import { FaCalendarAlt, FaMoneyBillWave, FaUserFriends, FaMapMarkerAlt, FaImage, FaPlus } from 'react-icons/fa';
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
@@ -18,13 +18,14 @@ const TravelItineraryGenerator = () => {
   const [interests, setInterests] = useState([]);
   const [generatedItinerary, setGeneratedItinerary] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [newInterest, setNewInterest] = useState('');
 
-  const interestOptions = [
+  const [interestOptions, setInterestOptions] = useState([
     { label: 'Beach' },
     { label: 'Hiking' },
     { label: 'Food' },
     { label: 'Culture' },
-  ];
+  ]);
 
   const handleInterestToggle = (interest) => {
     setInterests((prev) =>
@@ -32,6 +33,14 @@ const TravelItineraryGenerator = () => {
         ? prev.filter((i) => i !== interest)
         : [...prev, interest]
     );
+  };
+
+  const addNewInterest = () => {
+    if (newInterest && !interestOptions.some(option => option.label.toLowerCase() === newInterest.toLowerCase())) {
+      setInterestOptions([...interestOptions, { label: newInterest }]);
+      setInterests([...interests, newInterest]);
+      setNewInterest('');
+    }
   };
 
   const generateItinerary = async () => {
@@ -62,10 +71,6 @@ const TravelItineraryGenerator = () => {
       console.error('Fetch error:', error);
     }
     setLoading(false);
-  };
-
-  const ActivityImage = ({ activity, day }) => {
-    const [imageError, setImageError] = useState(false);
   };
 
   return (
@@ -156,7 +161,7 @@ const TravelItineraryGenerator = () => {
             {/* Interest Selection */}
             <div>
               <span className="block text-sm font-medium text-gray-700 mb-2">Interests</span>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-2">
                 {interestOptions.map((option, index) => (
                   <button
                     key={index}
@@ -170,6 +175,22 @@ const TravelItineraryGenerator = () => {
                     {option.label}
                   </button>
                 ))}
+              </div>
+              <div className="flex mt-2">
+                <input
+                  type="text"
+                  value={newInterest}
+                  onChange={(e) => setNewInterest(e.target.value)}
+                  placeholder="Add new interest"
+                  className="flex-grow mr-2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                />
+                <button
+                  onClick={addNewInterest}
+                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  <FaPlus className="mr-2" />
+                  Add
+                </button>
               </div>
             </div>
 
@@ -214,7 +235,6 @@ const TravelItineraryGenerator = () => {
                         <h4 className="text-lg font-semibold text-indigo-600">Day {item.day}</h4>
                         <p className="text-base font-medium mt-2">{item.activity}</p>
                         <p className="mt-1 text-sm text-gray-600">{item.description}</p>
-                        <ActivityImage activity={item} day={item.day} />
                       </div>
                     ))}
                   </dd>
