@@ -36,7 +36,7 @@ const generateItinerary = async (destination, startDate, endDate, budget, travel
     ]
   }
   
-  Ensure the itinerary is highly relevant to the traveler's interests, destination, and budget. The activities should be engaging, diverse, and exciting. Each description should highlight the cultural, historical, or recreational significance of the activity. Keep the tone informative and enthusiastic. Do not give anything other than a JSON`;
+  Ensure the itinerary is highly relevant to the traveler's interests, destination, and budget. The activities should be engaging, diverse, and exciting. Each description should highlight the cultural, historical, or recreational significance of the activity. Keep the tone informative and enthusiastic. Give specific information such as location, time, etc. Do not give anything other than a JSON`;
   
 
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
