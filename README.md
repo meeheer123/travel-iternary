@@ -39,12 +39,17 @@ The Personalized Travel Itinerary Generator is a web application that creates cu
    cd travel-iternary
    ```
 
-2. Start the development server:
+2. Install dependencies:
+    ```
+    npm install
+    ```
+
+3. Start the development server:
    ```
    npm run dev
    ```
 
-3. Open your browser and navigate to `http://localhost:3000`
+4. Open your browser and navigate to `http://localhost:3000`
 
 ## Usage
 
