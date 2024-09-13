@@ -66,24 +66,6 @@ const TravelItineraryGenerator = () => {
 
   const ActivityImage = ({ activity, day }) => {
     const [imageError, setImageError] = useState(false);
-    const imageSrc = activity.image || `https://source.unsplash.com/800x600/?${encodeURIComponent(destination + ' ' + activity.activity)}`;
-
-    return (
-      <div className="mt-3 relative bg-gray-100 rounded-lg overflow-hidden" style={{ paddingTop: '56.25%' }}>
-        {!imageError ? (
-          <img 
-            src={imageSrc}
-            alt={`Day ${day} - ${activity.activity}`}
-            className="absolute top-0 left-0 w-full h-full object-cover"
-            onError={() => setImageError(true)}
-          />
-        ) : (
-          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-            <FaImage className="text-gray-400 text-4xl" />
-          </div>
-        )}
-      </div>
-    );
   };
 
   return (

@@ -65,11 +65,6 @@ const generateItinerary = async (destination, startDate, endDate, budget, travel
         throw new Error('Unable to parse itinerary data');
       }
     }
-    
-    itinerary.activities = itinerary.activities.map(activity => ({
-      ...activity,
-      image: `https://source.unsplash.com/800x600/?${encodeURIComponent(destination + ' ' + activity.activity)}`
-    }));
 
     return itinerary;
 
