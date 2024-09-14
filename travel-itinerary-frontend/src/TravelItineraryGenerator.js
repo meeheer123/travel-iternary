@@ -47,7 +47,7 @@ const TravelItineraryGenerator = () => {
     setLoading(true);
     try {
       let url = "https://travel-iternary-one.vercel.app/api/generate-itinerary"
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'deployment') {
         url = "https://travel-iternary-one.vercel.app/api/generate-itinerary"
       }
       else
