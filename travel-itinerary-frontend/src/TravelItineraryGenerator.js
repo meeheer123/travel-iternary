@@ -46,7 +46,15 @@ const TravelItineraryGenerator = () => {
   const generateItinerary = async () => {
     setLoading(true);
     try {
-      const response = await fetch('https://travel-iternary-one.vercel.app/api/generate-itinerary', {
+      let url = "https://travel-iternary-one.vercel.app/api/generate-itinerary"
+      if (process.env.NODE_ENV === 'development') {
+        url = "https://travel-iternary-one.vercel.app/api/generate-itinerary"
+      }
+      else
+      {
+        url = "http://127.0.0.1:5000/api/generate-itinerary"
+      }
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
